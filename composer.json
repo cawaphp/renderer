@@ -1,9 +1,10 @@
 {
-    "name": "cawaphp/console",
-    "description": "Сáша Console",
+    "name": "cawaphp/renderer",
+    "description": "Сáша Renderer",
     "keywords": [
-        "console",
-        "cli"
+        "renderer",
+        "html",
+        "phtml"
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -15,13 +16,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Cawa\\Console\\": "src"
+            "Cawa\\Renderer\\": "src"
         }
     },
     "require": {
         "php": "~7.0",
-        "cawaphp/cawa" : "dev-master",
-        "symfony/console": "~3.1"
+        "cawaphp/cawa" : "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "~5.5"
