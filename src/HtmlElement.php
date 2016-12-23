@@ -247,6 +247,14 @@ class HtmlElement extends Element
     }
 
     /**
+     * @return string
+     */
+    public function renderInner() : string
+    {
+        return $this->content;
+    }
+
+    /**
      * @return array
      */
     public function renderOuter() : array

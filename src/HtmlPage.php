@@ -268,6 +268,10 @@ class HtmlPage extends HtmlContainer
         $content = $this->body->getContent();
         if ($content) {
             $this->body->setContent($content . $this->footer->render());
+        } else if (sizeof($this->body->elements)) {
+            $this->body->add($this->footer);
+        } else {
+            $this->body->setContent($this->footer->render());
         }
 
         $parent = parent::render();

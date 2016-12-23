@@ -34,6 +34,14 @@ class HtmlContainer extends HtmlElement
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function renderInner() : string
+    {
+        return $this->containerRender();
+    }
+
+    /**
      * @return array
      */
     public function renderOuter() : array
