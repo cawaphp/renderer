@@ -124,6 +124,60 @@ class HtmlElement extends Element
     }
 
     /**
+     * @var array
+     */
+    protected $props = [];
+
+    /**
+     * @param array $props
+     *
+     * @return $this|self
+     */
+    public function addProps(array $props) : self
+    {
+        foreach ($props as $value) {
+            $this->props[] = $value;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this|self
+     */
+    public function addProp(string $value) : self
+    {
+        $this->props[] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasProp(string $name) : bool
+    {
+        return in_array($name, $this->props) ? true : false;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return $this|self
+     */
+    public function removeProp(string $name) : self
+    {
+        if(($key = array_search($name, $this->props)) !== false) {
+            unset($this->props[$key]);
+        }
+        return $this;
+    }
+
+    /**
      * @param string $value
      *
      * @return $this|self
@@ -243,7 +297,7 @@ class HtmlElement extends Element
             throw new \LogicException('Missing tag');
         }
 
-        return $this->isRenderable() ? self::htmlTag($this->tag, $this->attributes, $this->content) : '';
+        return $this->isRenderable() ? self::htmlTag($this->tag, $this->attributes, $this->props, $this->content) : '';
     }
 
     /**
@@ -263,7 +317,7 @@ class HtmlElement extends Element
             throw new \LogicException('Missing tag');
         }
 
-        $render = self::htmlTag($this->tag, $this->attributes, '[-INNER-]');
+        $render = self::htmlTag($this->tag, $this->attributes, $this->props, '[-INNER-]');
 
         return explode('[-INNER-]', $render);
     }
@@ -271,13 +325,14 @@ class HtmlElement extends Element
     /**
      * @param string $tag
      * @param array $attributes
+     * @param string $props
      * @param string $innerHtml
      *
      * @throws \InvalidArgumentException
      *
      * @return string
      */
-    public static function htmlTag(string $tag, array $attributes = [], $innerHtml = null) : string
+    public static function htmlTag(string $tag, array $attributes = [], array $props = [], $innerHtml = null) : string
     {
         $invalid = $tag[0] != '<' || substr($tag, -1) != '>';
 
@@ -297,6 +352,7 @@ class HtmlElement extends Element
 
         $return = ($autoClose) ? trim(substr($tag, 0, -2)) : trim(substr($tag, 0, -1));
         $return .= ' ' . self::htmlAttribute($attributes);
+        $return .= ' ' . implode(' ', $props);
         $return = trim($return);
 
         if ($autoClose) {
