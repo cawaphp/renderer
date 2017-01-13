@@ -35,7 +35,7 @@ class PhtmlHtmlContainer extends HtmlContainer
         $clone = $deepcopy->copy($this);
 
         $content = $clone->content ?: $clone->containerRender();
-        $clone->addData('content', $content);
+        $clone->addViewData('content', $content);
         $clone->content = $clone->phtmlRender();
 
         $clone->clear();

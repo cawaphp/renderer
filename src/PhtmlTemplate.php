@@ -44,7 +44,7 @@ class PhtmlTemplate extends ViewController
         }
 
         $phtml = new static($templatePath);
-        $phtml->addDatas($data);
+        $phtml->addViewDatas($data);
 
         return $phtml->render();
     }

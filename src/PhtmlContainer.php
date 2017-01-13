@@ -29,7 +29,7 @@ class PhtmlContainer extends ViewController
      */
     public function render()
     {
-        $this->addData('content', $this->containerRender());
+        $this->addViewData('content', $this->containerRender());
 
         return $this->phtmlRender();
     }

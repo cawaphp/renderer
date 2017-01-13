@@ -41,10 +41,10 @@ trait PhtmlTrait
             return ob_get_clean();
         }, $this, get_class($this));
 
-        return $closure($this->templatePath, $this->getData());
+        return $closure($this->templatePath, $this->getViewData());
 
         /*
-        $data = $this->getData();
+        $data = $this->getViewData();
 
         extract($data);
         ob_start();

@@ -49,6 +49,6 @@ trait TwigTrait
         }
         $template = self::$renderer->loadTemplate($this->templatePath . '.twig');
 
-        return $template->render($this->getData());
+        return $template->render($this->getViewData());
     }
 }
