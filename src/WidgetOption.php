@@ -13,22 +13,16 @@ declare (strict_types = 1);
 
 namespace Cawa\Renderer;
 
-use Cawa\Controller\ViewController;
-
-class WidgetOption extends ViewController
+class WidgetOption extends HtmlElement
 {
-    /**
-     * @var HtmlElement
-     */
-    private $element;
-
     /**
      * @param array $data
      */
     public function __construct(array $data = [])
     {
-        $this->element = new HtmlElement('<script>');
-        $this->element->addAttribute('type', 'application/json');
+        parent::__construct('<script>');
+        $this->addAttribute('type', 'application/json');
+
         $this->data = $data;
     }
 
@@ -87,8 +81,8 @@ class WidgetOption extends ViewController
      */
     public function render()
     {
-        $this->element->setContent(json_encode($this->data));
+        $this->setContent(json_encode($this->data));
 
-        return $this->element->render();
+        return parent::render();
     }
 }
