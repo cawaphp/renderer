@@ -171,9 +171,10 @@ class HtmlElement extends Element
      */
     public function removeProp(string $name) : self
     {
-        if(($key = array_search($name, $this->props)) !== false) {
+        if (($key = array_search($name, $this->props)) !== false) {
             unset($this->props[$key]);
         }
+
         return $this;
     }
 
