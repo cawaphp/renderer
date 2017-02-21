@@ -169,7 +169,7 @@ class HtmlPage extends HtmlContainer
             $meta->addAttributes([
                 'type' => 'text/css',
                 'rel' => 'stylesheet',
-                'href' => $path
+                'href' => (string) $path
             ]);
         } else {
             $meta = new HtmlElement('<style>');
@@ -207,7 +207,7 @@ class HtmlPage extends HtmlContainer
                 $meta->addAttribute('name', str_replace(['.js', '.', '/', ':'], ['', '_', '_', '_'], $javascript));
             }
 
-            $meta->addAttribute('src', $path);
+            $meta->addAttribute('src', (string) $path);
         } else {
             $meta->setContent($javascript);
         }

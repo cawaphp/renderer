@@ -14,13 +14,14 @@ declare (strict_types = 1);
 namespace Cawa\Renderer;
 
 use Cawa\Core\DI;
+use Cawa\Net\Uri;
 
 trait AssetTrait
 {
     /**
      * @param string $path
      *
-     * @return array
+     * @return array<Uri, bool>
      */
     protected function getAssetData(string $path) : array
     {
@@ -41,7 +42,15 @@ trait AssetTrait
             $path = rtrim($assetsPath, '/') . '/' . $path;
         }
 
-        $return[0] = $path;
+        $host = DI::config()->getIfExists('assets/host') ?: '';
+        $return[0] = (new Uri(null, [Uri::OPTIONS_RELATIVE => empty($host)]))
+            ->setPath($path)
+            ->setQueries([])
+            ->setFragment();
+
+        if ($host) {
+            $return[0]->setHost($host);
+        }
 
         return $return;
     }
@@ -49,9 +58,9 @@ trait AssetTrait
     /**
      * @param string $path
      *
-     * @return string
+     * @return Uri
      */
-    public function asset(string $path) : string
+    public function asset(string $path) : Uri
     {
         list($path) = $this->getAssetData($path);
 
