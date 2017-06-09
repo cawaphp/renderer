@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-declare (strict_types = 1);
+declare(strict_types = 1);
 
 namespace Cawa\Renderer;
 
@@ -80,7 +80,7 @@ class HtmlPage extends HtmlContainer
     /**
      * @var HtmlElement
      */
-    private $headTitle;
+    protected $headTitle;
 
     /**
      * @return bool
@@ -117,7 +117,15 @@ class HtmlPage extends HtmlContainer
     /**
      * @var HtmlElement
      */
-    private $headDescription;
+    protected $headDescription;
+
+    /**
+     * @return bool
+     */
+    public function hasHeadDescription() : bool
+    {
+        return !is_null($this->headDescription);
+    }
 
     /**
      * @return string|null
@@ -145,7 +153,37 @@ class HtmlPage extends HtmlContainer
     }
 
     /**
-     * Add Css file inclusion
+     * @var HtmlElement
+     */
+    protected $headImage;
+
+    /**
+     * @return string|null
+     */
+    public function getHeadImage()
+    {
+        return $this->headImage ? $this->headImage->getContent() : null;
+    }
+
+    /**
+     * @param string $image
+     *
+     * @return $this|self
+     */
+    public function setHeadImage(string $image) : self
+    {
+        if (!$this->headImage) {
+            $this->headImage = new HtmlElement('<link>');
+            $this->headImage->addAttribute('rel', 'image_src');
+            $this->head->add($this->headImage);
+        }
+        $this->headImage->addAttribute('href', $image);
+
+        return $this;
+    }
+
+    /**
+     * Add Css file inclusion.
      *
      * @param string $css
      * @param array $attributes
@@ -169,7 +207,7 @@ class HtmlPage extends HtmlContainer
             $meta->addAttributes([
                 'type' => 'text/css',
                 'rel' => 'stylesheet',
-                'href' => (string) $path
+                'href' => (string) $path,
             ]);
         } else {
             $meta = new HtmlElement('<style>');
@@ -184,7 +222,7 @@ class HtmlPage extends HtmlContainer
     }
 
     /**
-     * Add Css file inclusion
+     * Add Css file inclusion.
      *
      * @param string $javascript
      * @param array $attributes
@@ -224,7 +262,7 @@ class HtmlPage extends HtmlContainer
             $preload->addAttributes([
                 'as' => 'script',
                 'href' => $meta->getAttribute('src'),
-                'rel' => 'preload'
+                'rel' => 'preload',
             ]);
             $this->head->add($preload);
         }
@@ -239,7 +277,6 @@ class HtmlPage extends HtmlContainer
     {
         $timerEvent = new TimerEvent('router.htmlPage', [
             'elements' => sizeof($this->elements),
-
         ]);
 
         $out = '<!DOCTYPE html lang="' . self::locale() . '">' . "\n";
@@ -257,7 +294,7 @@ class HtmlPage extends HtmlContainer
         $language = new HtmlElement('<meta />');
         $language->addAttributes([
             'http-equiv' => 'Content-Language',
-            'content' => self::locale()
+            'content' => self::locale(),
         ]);
         $this->head->addFirst($language);
 
