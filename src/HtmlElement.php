@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare (strict_types = 1);
+declare(strict_types = 1);
 
 namespace Cawa\Renderer;
 
@@ -326,7 +326,7 @@ class HtmlElement extends Element
     /**
      * @param string $tag
      * @param array $attributes
-     * @param string $props
+     * @param array $props
      * @param string $innerHtml
      *
      * @throws \InvalidArgumentException
