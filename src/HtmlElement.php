@@ -326,7 +326,7 @@ class HtmlElement extends Element
     /**
      * @param string $tag
      * @param array $attributes
-     * @param string $props
+     * @param array $props
      * @param string $innerHtml
      *
      * @throws \InvalidArgumentException

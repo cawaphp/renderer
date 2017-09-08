@@ -13,6 +13,7 @@ declare(strict_types = 1);
 
 namespace Cawa\Renderer;
 
+use Cawa\App\HttpFactory;
 use Cawa\Core\DI;
 use Cawa\Net\Uri;
 
@@ -42,14 +43,22 @@ trait AssetTrait
             $path = rtrim($assetsPath, '/') . '/' . $path;
         }
 
-        $host = DI::config()->getIfExists('assets/host') ?: '';
+        $host = '';
+        if (substr($path, 0, 1) == '/') {
+            if (DI::config()->getIfExists('assets/absolute')) {
+                $host = self::request()->getUri()->getHostFull();
+            } else {
+                $host = DI::config()->getIfExists('assets/host');
+            }
+        }
+
         $return[0] = (new Uri(null, [Uri::OPTIONS_RELATIVE => empty($host)]))
             ->setPath($path)
             ->setQueries([])
             ->setFragment();
 
         if ($host) {
-            $return[0]->setHost($host);
+            $return[0]->setHostFull($host);
         }
 
         return $return;

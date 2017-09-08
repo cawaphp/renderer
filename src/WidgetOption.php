@@ -48,7 +48,7 @@ class WidgetOption extends HtmlElement
     public function addData(string $key, $value) : self
     {
         if (isset($this->data[$key]) && is_array($value)) {
-            $this->data[$key] = array_merge($value, $this->data[$key]);
+            $this->data[$key] = array_merge($value, is_array($this->data[$key]) ? $this->data[$key] : [$this->data[$key]]);
         } else {
             $this->data[$key] = $value;
         }
