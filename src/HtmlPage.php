@@ -279,7 +279,7 @@ class HtmlPage extends HtmlContainer
             'elements' => sizeof($this->elements),
         ]);
 
-        $out = '<!DOCTYPE html lang="' . self::locale() . '">' . "\n";
+        $out = '<!DOCTYPE html>' . "\n";
 
         // default seo
         if (!$this->headTitle && $title = self::trans('seo.default/title')) {

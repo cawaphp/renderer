@@ -13,7 +13,6 @@ declare(strict_types = 1);
 
 namespace Cawa\Renderer;
 
-use Cawa\App\HttpFactory;
 use Cawa\Core\DI;
 use Cawa\Net\Uri;
 
