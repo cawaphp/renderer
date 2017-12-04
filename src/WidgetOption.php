@@ -42,13 +42,23 @@ class WidgetOption extends HtmlElement
     /**
      * @param string $key
      * @param mixed $value
+     * @param bool $push
      *
      * @return $this|self
      */
-    public function addData(string $key, $value) : self
+    public function addData(string $key, $value, bool $push = false) : self
     {
-        if (isset($this->data[$key]) && is_array($value)) {
-            $this->data[$key] = array_replace_recursive(is_array($this->data[$key]) ? $this->data[$key] : [$this->data[$key]], $value);
+        if ($push == false && isset($this->data[$key]) && is_array($value)) {
+            $this->data[$key] = array_replace_recursive(
+                is_array($this->data[$key]) ? $this->data[$key] : [$this->data[$key]],
+                $value
+            );
+        } else if ($push) {
+            if (!isset($this->data[$key])) {
+                $this->data[$key] = [];
+            }
+
+            $this->data[$key][] = $value;
         } else {
             $this->data[$key] = $value;
         }
